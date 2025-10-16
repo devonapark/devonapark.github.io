@@ -1,8 +1,6 @@
 ---
 title: "About this website"
-output: 
-  html_document:
-    theme: cerulean
+output: html_document
 ---
 
 We often make plots in data science.

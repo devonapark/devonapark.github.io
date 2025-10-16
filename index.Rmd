@@ -50,3 +50,4 @@ Here's a plot. This seems to show:
 $$ y_i = \beta_0 + \beta_11 x_i + \epsilon$$
 
 
+This will always be the homepage. I can make other repositories and make them websites and it will be https://devonapark.github.io/NEW_REPO_NAME.
