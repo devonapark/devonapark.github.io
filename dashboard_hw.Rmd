@@ -1,0 +1,116 @@
+---
+title: "Instacart Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(dplyr)
+library(plotly)
+library(p8105.datasets)
+```
+
+
+```{r}
+#Load the Instacart Data
+data("instacart")
+
+#Stacked bar chart by aisle count
+#create a new df that has all the departments, counts how many aisles are in each department and the total number of items for that deparment
+dept_totals =
+  instacart |> 
+  count(department, aisle, name = "items") |> 
+  filter(items > 10000) |> 
+  group_by(department) |> 
+  summarise(
+    total_items = sum(items), 
+    n_aisles = n(), #counts how many aisles exist per department
+    .groups = "drop")
+
+items_per_aisle =
+  instacart |>
+  count(aisle_id, aisle, department, name = "items") |> 
+  filter(items > 10000) |> 
+  group_by(department) |> 
+  mutate(dept_total = sum(items)) |> 
+  ungroup() |> #if we dont ungroup, many dplyr functions will keep operating per department groups
+  arrange(desc(dept_total), desc(items)) |> 
+  relocate(department, aisle)
+
+```
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Items per Aisle
+
+```{r}
+#items_per_aisle
+
+items_per_aisle |>
+  plot_ly(x = ~aisle, y = ~items, color = ~department,
+    type = "bar")
+
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Number of orders per Department
+
+```{r}
+#deparment order counts
+
+instacart |> 
+  count(department) |> 
+  mutate(
+    department = fct_reorder(department, n)
+  ) |> 
+  plot_ly(
+    x = ~department, y = ~n,
+    type = "bar") |> 
+  layout(
+    xaxis = list(title = "Department", tickangle = -45, categoryorder = "total ascending"), #sets how i want to order categories on a categorical axis
+    yaxis = list(title = "Number of Orders")
+  )
+```
+
+### Number of Aisles for Each Department
+
+```{r}
+#Items ordered by department
+
+instacart |>
+  filter(department != "missing") |>
+  group_by(department) |>
+  summarize(
+    n_aisles = n_distinct(aisle), 
+    .groups = "drop") |>
+  arrange(n_aisles) |>
+  plot_ly(
+    x = ~department,
+    y = ~n_aisles,
+    type = "bar"
+  ) |>
+  layout(
+    xaxis = list(title = "Department", tickangle = -45, categoryorder = "total ascending"), #sets how i want to order categories on a categorical axis
+    yaxis = list(title = "Number of aisles")
+  )
+
+```
+
+```{r}
+#using this line to make it knit appropriately: rmarkdown::render("dashboard.rmd", output_format = "flexdashboard::flex_dashboard")
+
+```
+
+
+
+
+

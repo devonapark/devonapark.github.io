@@ -1,0 +1,24 @@
+---
+title: "About Me"
+output: html_document
+---
+
+
+![](images/devon_hiking.jpeg)
+
+Devon Park is a Master of Public Health candidate at Columbia University’s Mailman School of Public Health, specializing in Health Policy & Management and Applied Biostatistics and Public Health Data Science. With a foundation in chemistry and a growing portfolio in health systems innovation, Devon bridges technical analysis with strategic policy insight to drive measurable improvements in healthcare delivery.
+
+Passionate about the intersection of technology, policy, and data, Devon aims to strengthen public health infrastructure through evidence-driven innovation and equitable systems design, specifically for low income forcibly displaced populations.
+
+
+Past projects include:
+
+- Using landsat imaging data to predic arsenic levels in water in the Lower Mekong River Region
+- Analysing NGO anual event and clinic data for Forearms of Change in Amman, Jordan
+- Created interactive dashboard exploring end-to-end lifecycle for drug development from R&D to patient bedside. (Vertex Pharmaceuticals)
+- Built dashboards to track incoming Epic enhacement requests and optimization projects while incorporating staffing capcity and regulatory needs.
+
+
+
+
+Go back to the [homepage](index.html).

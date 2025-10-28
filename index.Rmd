@@ -1,53 +1,20 @@
 ---
-title: "My awesome website"
+title: "Devon Park"
 output: 
   html_document:
     toc: true
     toc_float: true
 ---
 
-got rid of ^(theme: cerulean) above because i set it in _site.yml
+Welcome to my website!
 
-# This is Jeff's awesome website
+Like all data scientists, I love the outdoors!
+![](images/nature.jpeg)
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+For HW 4, please navigate to the [About Me](about_me.html) to learn more about me! 
 
+To see some instacart graphics, click [here](dashboard_hw.html) or go through the navigation bar and press "Dashboard".
 
-You can do everything you might usually do.
-
-
-..like add text:
-
-
-This website is an example coming from [P8105](https://p8105.com/index.html). We're making websites today.
-
-I also use [google](https://www.google.com/) a ton for data science.
-
-How to link from the index page to the about page:
-
-Learn more about this site [here](about.html).
-For this to work, all of your pages need to be in the same folder. 
+You can also use the dropdown bar in the top right corner to navigate to this page or find my github. 
 
 
-Here are some [plots](plots.html).
-
-
-To show that you can use RMD like normal, check out this page with [plots](plots.html).
-
-
-Include a picture!
-![](images/jules.jpg)
-
-
-If I want to ge fonts, they come from this [place](https://fontawesome.com/).
-
-I can change icons from that site link as well. 
-
-I can copy what is going on in our p8105 website by going to the github and getting it from that _site.yml 
-
-
-Here's a plot. This seems to show:
-$$ y_i = \beta_0 + \beta_11 x_i + \epsilon$$
-
-
-This will always be the homepage. I can make other repositories and make them websites and it will be https://devonapark.github.io/NEW_REPO_NAME.

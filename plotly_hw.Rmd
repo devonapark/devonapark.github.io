@@ -1,0 +1,98 @@
+---
+title: "Instacart Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(p8105.datasets)
+```
+
+
+Load the Instacart Data
+
+```{r}
+data("instacart")
+
+#Stacked bar chart by aisle count
+#create a new df that has all the departments, counts how many aisles are in each department and the total number of items for that deparment
+dept_totals =
+  instacart |> 
+  count(department, aisle, name = "items") |> 
+  filter(items > 10000) |> 
+  group_by(department) |> 
+  summarise(
+    total_items = sum(items), 
+    n_aisles = n(), #counts how many aisles exist per department
+    .groups = "drop")
+
+```
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+dept_totals |> 
+ggplot(aes(x = reorder(department, total_items),
+           y = total_items,
+           fill = department)) +
+  geom_col(show.legend = FALSE) + #I dont want to see what the colors are because it already says on the axis
+  geom_text(aes(label = paste0("(", n_aisles, " aisles)")), #prints out label per bar 
+            hjust = -0.1, size = 3) +
+  coord_flip() +
+  scale_y_continuous(labels = scales::comma) +
+  labs(
+    title = "Total Items Ordered by Department (Aisles > 10,000)",
+    x = "Department",
+    y = "Number of Items Ordered"
+  )
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+#top_products
+
+instacart |> 
+  count(product_id, product_name, sort = TRUE, name = "#_times_purchased") |> #count how often each product_id appears
+  select(-product_id) |> 
+  relocate(product_name) |> 
+  slice_head(n = 10) |>
+  knitr::kable()
+```
+
+### Chart C
+
+```{r}
+#Top_aisles 
+
+instacart |> 
+  filter(aisle == c("baking ingredients", "dog food care", "packaged vegetables fruits")) |> 
+  count(aisle, product_name, sort = TRUE) |> 
+  group_by(aisle) |> 
+  slice_max(n, n = 3) |> 
+  arrange(aisle, desc(n)) |> 
+  knitr::kable(col.names = c("Aisle", "Product", "# Ordered"))  #format names of columns
+
+```
+
+```{r}
+#using this line to make it knit appropriately: rmarkdown::render("dashboard.rmd", output_format = "flexdashboard::flex_dashboard")
+
+```
+
+
+
+
+
