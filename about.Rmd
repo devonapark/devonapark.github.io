@@ -9,4 +9,4 @@ This website was coded by Jeff using R markdown.
 Go back to the [homepage](index.html).
 
 
-You can have a page specific theme by puttint on the page indvidually. 
+You can have a page specific theme by puttint on the page indvidually. (You may not even need to include the output line)

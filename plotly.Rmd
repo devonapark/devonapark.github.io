@@ -1,0 +1,174 @@
+---
+title: "interactivity_pt2: here are some plotly plots"
+output: html_document
+date: "2025-10-28"
+---
+
+Interactivity is great!
+
+Here's the tidyverse
+
+```{r}
+library(tidyverse)
+library(plotly)
+
+library(p8105.datasets)
+```
+
+
+Let's load the AirBnB dataset.
+
+```{r}
+data("nyc_airbnb")
+
+#Trimming it down to make it easier to use
+
+nyc_airbnb = 
+  nyc_airbnb |> 
+  mutate(
+    rating = review_scores_location / 2 #this is now the stars (becuase it was stars*2)
+  ) |> 
+  select(
+    neighbourhood_group, neighbourhood, rating,
+    price, room_type, lat, long
+  ) |> #making this smaller because it is going on the internet. imagine everytime you went online to see this plot that you needed to import a HUGE dataset
+  filter(
+    neighbourhood_group == "Manhattan",
+    room_type == "Entire home/apt",
+    price <= 500,
+    price >= 100
+  )
+```
+
+
+Let's make a scatterplot!!!! But interactive this time.
+
+```{r}
+#basic form
+nyc_airbnb |> 
+  plot_ly( 
+    #note the different syntax compared to ggplot
+    x = ~lat, y = ~long, color= ~price,
+    type = "scatter", mode = "markers", alpha = 0.5
+  )
+
+#by default, plotly knows to use viridis (we did not call this)
+#alpha makes this a little more transparent
+#markers can be lines (geom_point is markers)
+
+nyc_airbnb |> 
+  mutate(
+    label = str_c("Price: $", price, "\nRating:", rating) ) |> 
+  plot_ly(
+    x = ~lat, y = ~long, color = ~price,
+    text = ~label, 
+    type = "scatter", mode = "markers", alpha = 0.5
+  )
+
+#str_c is in the stringer package
+#\n in a string variable this starts a new line
+
+
+```
+
+
+Let's make a boxplot.
+
+```{r}
+nyc_airbnb |> 
+  mutate(
+    neighbourhood = fct_reorder(neighbourhood, price)
+  ) |> 
+  plot_ly(
+    x = ~neighbourhood, y = ~price, color = ~neighbourhood,
+    type = "box", colors = "viridis"
+  )
+```
+
+
+Maybe barcharts next?
+
+```{r}
+nyc_airbnb |> 
+  count(neighbourhood) |> 
+  mutate(
+    neighbourhood = fct_reorder(neighbourhood, n)
+  ) |> 
+  plot_ly(
+    x = ~neighbourhood, y = ~n,
+    type = "bar")
+```
+
+## ggplotly
+
+don't use this often.
+
+```{r}
+ggp_scatterplot = 
+  nyc_airbnb |> 
+  ggplot(aes(x = lat, y = long, color = price)) + 
+  geom_point()
+
+ggplotly(ggp_scatterplot)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
